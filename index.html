@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoClean</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Flaticon UIcons -->
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==================== LOGIN PAGE ==================== -->
+  <div id="page-login" class="page page-auth active">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="logo.svg" alt="Logo EcoClean" class="logo-icon">
+        <span class="logo-text">EcoClean</span>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="setAuthTab('login')">Entrar</button>
+        <button class="auth-tab" onclick="setAuthTab('cadastro'); navigateTo('page-cadastro')">Cadastrar</button>
+      </div>
+
+      <form class="auth-form" onsubmit="handleLogin(event)">
+        <div class="field-group">
+          <label class="field-label">Email</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-envelope input-icon"></i>
+            <input type="email" class="field-input has-icon" placeholder="seu@email.com" id="login-email">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Senha</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-lock input-icon"></i>
+            <input type="password" class="field-input has-icon" placeholder="Sua senha" id="login-senha">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Tipo de Acesso</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-user input-icon"></i>
+            <select class="field-input field-select has-icon" id="login-tipo">
+              <option value="">Cidadão / Admin</option>
+              <option value="cidadao">Cidadão</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary btn-full">
+          <i class="fi fi-rr-sign-in-alt btn-icon"></i> Entrar
+        </button>
+        <a href="#" class="auth-link">Esqueceu a senha?</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== CADASTRO PAGE ==================== -->
+  <div id="page-cadastro" class="page page-auth">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="logo.svg" alt="Logo EcoClean" class="logo-icon">
+        <span class="logo-text">EcoClean</span>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab" onclick="navigateTo('page-login')">Entrar</button>
+        <button class="auth-tab active" onclick="setAuthTab('cadastro')">Cadastrar</button>
+      </div>
+
+      <form class="auth-form" onsubmit="handleCadastro(event)">
+        <div class="field-group">
+          <label class="field-label">Nome Completo</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-user input-icon"></i>
+            <input type="text" class="field-input has-icon" placeholder="Seu nome completo">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">CPF</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-id-card-clip-alt input-icon"></i>
+            <input type="text" class="field-input has-icon" placeholder="000.000.000-00">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Tipo de Acesso</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-shield-check input-icon"></i>
+            <select class="field-input field-select has-icon">
+              <option value="">Selecione...</option>
+              <option value="cidadao">Cidadão</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Senha</label>
+          <div class="input-wrapper">
+            <i class="fi fi-rr-lock input-icon"></i>
+            <input type="password" class="field-input has-icon" placeholder="Crie uma senha segura">
+          </div>
+        </div>
+        <button type="submit" class="btn-primary btn-full">
+          <i class="fi fi-rr-user-add btn-icon"></i> Cadastrar
+        </button>
+        <a href="#" class="auth-link">Já tem conta? Entrar</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== APP SHELL (sidebar + content) ==================== -->
+  <div id="page-app" class="page page-app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="logo.svg" alt="Logo EcoClean" class="logo-icon">
+        <span class="logo-text">EcoClean</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Principal</div>
+        <div class="nav-divider"></div>
+
+        <div class="nav-section">
+          <a href="#" class="nav-item" data-page="page-mapa" onclick="switchContent('page-mapa', this)">
+            <span class="nav-icon"><i class="fi fi-rr-map-marker"></i></span>
+            <span>Mapa de coleta</span>
+          </a>
+          <a href="#" class="nav-item" data-page="page-denuncia" onclick="switchContent('page-denuncia', this)">
+            <span class="nav-icon"><i class="fi fi-rr-triangle-warning"></i></span>
+            <span>Fazer denuncia</span>
+          </a>
+          <a href="#" class="nav-item" data-page="page-coleta" onclick="switchContent('page-coleta', this)">
+            <span class="nav-icon"><i class="fi fi-rr-calendar-plus"></i></span>
+            <span>Agendar coleta</span>
+          </a>
+          <a href="#" class="nav-item" data-page="page-guia" onclick="switchContent('page-guia', this)">
+            <span class="nav-icon"><i class="fi fi-rr-book-open-reader"></i></span>
+            <span>Guia de descarte</span>
+          </a>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <div class="nav-section">
+          <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fi fi-rr-bell"></i></span>
+            <span>Notificações</span>
+          </a>
+        </div>
+
+        <div class="nav-section nav-bottom">
+          <a href="#" class="nav-item nav-logout" onclick="handleLogout(event)">
+            <span class="nav-icon"><i class="fi fi-rr-exit"></i></span>
+            <div>
+              <div>Sair</div>
+              <div class="nav-sub" id="sidebar-username">Nome do Usuário</div>
+            </div>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="content-area">
+
+      <!-- MAPA DE COLETA -->
+      <div id="page-mapa" class="content-page active">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Mapa de coleta</h1>
+            <p class="page-subtitle">Encontre pontos próximos</p>
+          </div>
+        </div>
+        <div class="page-divider"></div>
+
+        <div class="content-card">
+          <div class="search-row">
+            <div class="search-wrapper">
+              <div class="search-icon">
+                <i class="fi fi-rr-search"></i>
+              </div>
+              <input type="text" class="search-input" placeholder="Pesquisar endereço ou bairro..." id="mapa-search">
+            </div>
+            <button class="btn-primary btn-search" onclick="buscarMapa()">
+              <i class="fi fi-rr-search btn-icon"></i> Buscar
+            </button>
+          </div>
+
+          <div class="map-container" id="map-container">
+            <div class="map-placeholder">
+              <div class="map-grid"></div>
+            </div>
+          </div>
+
+          <div class="map-legend">
+            <div class="legend-item"><span class="legend-dot dot-green"></span> Ecoponto</div>
+            <div class="legend-item"><span class="legend-dot dot-blue"></span> Coleta de Eletrônico</div>
+            <div class="legend-item"><span class="legend-dot dot-red"></span> Descarte Químico</div>
+            <div class="legend-item"><span class="legend-dot dot-purple"></span> Coleta Volumosa</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAZER DENÚNCIA -->
+      <div id="page-denuncia" class="content-page">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fazer Denúncia</h1>
+            <p class="page-subtitle">Realize uma denúncia sobre pontos de descarte ilegais.</p>
+          </div>
+        </div>
+        <div class="page-divider"></div>
+
+        <div class="content-card">
+          <div class="card-section-title">Nova denúncia</div>
+
+          <form class="form-grid" onsubmit="handleDenuncia(event)">
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label class="field-label">Tipo de Resíduo</label>
+                <select class="field-input field-select">
+                  <option>Eletrônicos</option>
+                  <option>Químico</option>
+                  <option>Orgânico</option>
+                  <option>Construção</option>
+                  <option>Outros</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Gravidade</label>
+                <select class="field-input field-select">
+                  <option>Baixa</option>
+                  <option>Média</option>
+                  <option>Alta</option>
+                  <option>Crítica</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Descrição</label>
+              <textarea class="field-input field-textarea" placeholder="Uma breve descrição sobre a ocorrência..."></textarea>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Anexe uma imagem</label>
+              <div class="file-drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                <i class="fi fi-rr-cloud-upload-alt file-drop-icon"></i>
+                <p>Clique ou arraste uma imagem aqui</p>
+                <span class="file-hint">PNG, JPG até 10MB</span>
+                <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary">
+                <i class="fi fi-rr-cross-circle btn-icon"></i> Cancelar
+              </button>
+              <button type="submit" class="btn-primary">
+                <i class="fi fi-rr-paper-plane btn-icon"></i> Enviar Denúncia
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- AGENDAR COLETA -->
+      <div id="page-coleta" class="content-page">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Agendar Coleta</h1>
+            <p class="page-subtitle">Agende uma coleta de material para sua residência</p>
+          </div>
+        </div>
+        <div class="page-divider"></div>
+
+        <div class="content-card">
+          <div class="card-section-title">Dados da Coleta</div>
+
+          <form class="form-grid" onsubmit="handleColeta(event)">
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label class="field-label">Tipo de Resíduo</label>
+                <select class="field-input field-select">
+                  <option>Eletrônicos</option>
+                  <option>Móveis</option>
+                  <option>Eletrodomésticos</option>
+                  <option>Entulho</option>
+                  <option>Outros</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Quantidade aproximada</label>
+                <input type="number" class="field-input" placeholder="Ex: 2" min="1">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Descrição do item</label>
+              <textarea class="field-input field-textarea" placeholder="Descreva o item, dimensões e outras informações relevantes..."></textarea>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label class="field-label">Data</label>
+                <div class="input-wrapper">
+                  <i class="fi fi-rr-calendar input-icon"></i>
+                  <input type="date" class="field-input has-icon">
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Período preferido</label>
+                <div class="input-wrapper">
+                  <i class="fi fi-rr-clock input-icon"></i>
+                  <select class="field-input field-select has-icon">
+                    <option>Manhã (08h–12h)</option>
+                    <option>Tarde (13h–17h)</option>
+                    <option>Qualquer horário</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-section-title" style="margin-top: 8px;">Endereço de coleta</div>
+
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label class="field-label">Logradouro</label>
+                <div class="input-wrapper">
+                  <i class="fi fi-rr-road input-icon"></i>
+                  <input type="text" class="field-input has-icon" placeholder="Rua, Avenida...">
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Número</label>
+                <input type="text" class="field-input" placeholder="123">
+              </div>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label class="field-label">Bairro</label>
+                <input type="text" class="field-input" placeholder="Bairro">
+              </div>
+              <div class="field-group">
+                <label class="field-label">CEP</label>
+                <div class="input-wrapper">
+                  <i class="fi fi-rr-marker input-icon"></i>
+                  <input type="text" class="field-input has-icon" placeholder="00000-000">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary">
+                <i class="fi fi-rr-cross-circle btn-icon"></i> Cancelar
+              </button>
+              <button type="submit" class="btn-primary">
+                <i class="fi fi-rr-calendar-check btn-icon"></i> Agendar Coleta
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- GUIA DE DESCARTE -->
+      <div id="page-guia" class="content-page">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Guia de Descarte</h1>
+            <p class="page-subtitle">Guia Informativo para descartes de materiais</p>
+          </div>
+        </div>
+        <div class="page-divider"></div>
+
+        <div class="content-card">
+          <div class="search-row">
+            <div class="search-wrapper">
+              <div class="search-icon">
+                <i class="fi fi-rr-search"></i>
+              </div>
+              <input type="text" class="search-input" placeholder="Pesquisar material..." id="guia-search" oninput="filtrarGuia(this.value)">
+            </div>
+            <button class="btn-primary btn-search" onclick="filtrarGuia(document.getElementById('guia-search').value)">
+              <i class="fi fi-rr-filter btn-icon"></i> Filtrar
+            </button>
+          </div>
+
+          <div class="guia-cards" id="guia-cards">
+            <div class="guia-card" data-categoria="eletronicos">
+              <div class="guia-card-icon" style="background: rgba(59,130,246,0.15); color: #3b82f6">
+                <i class="fi fi-rr-computer"></i>
+              </div>
+              <div class="guia-card-title">Eletrônicos</div>
+              <div class="guia-card-items">celular, tablet, notebook, TV</div>
+            </div>
+            <div class="guia-card" data-categoria="quimicos">
+              <div class="guia-card-icon" style="background: rgba(239,68,68,0.15); color: #ef4444">
+                <i class="fi fi-rr-flask"></i>
+              </div>
+              <div class="guia-card-title">Químicos</div>
+              <div class="guia-card-items">tintas, solventes, pilhas, baterias</div>
+            </div>
+            <div class="guia-card" data-categoria="organicos">
+              <div class="guia-card-icon" style="background: rgba(34,197,94,0.15); color: #22c55e">
+                <i class="fi fi-rr-leaf"></i>
+              </div>
+              <div class="guia-card-title">Orgânicos</div>
+              <div class="guia-card-items">restos de comida, podas, folhas</div>
+            </div>
+            <div class="guia-card" data-categoria="construcao">
+              <div class="guia-card-icon" style="background: rgba(245,158,11,0.15); color: #f59e0b">
+                <i class="fi fi-rr-hammer"></i>
+              </div>
+              <div class="guia-card-title">Construção</div>
+              <div class="guia-card-items">tijolos, cimento, madeira, telhas</div>
+            </div>
+            <div class="guia-card" data-categoria="vidro">
+              <div class="guia-card-icon" style="background: rgba(6,182,212,0.15); color: #06b6d4">
+                <i class="fi fi-rr-glass"></i>
+              </div>
+              <div class="guia-card-title">Vidro</div>
+              <div class="guia-card-items">garrafas, potes, espelhos</div>
+            </div>
+            <div class="guia-card" data-categoria="papel">
+              <div class="guia-card-icon" style="background: rgba(168,85,247,0.15); color: #a855f7">
+                <i class="fi fi-rr-document"></i>
+              </div>
+              <div class="guia-card-title">Papel</div>
+              <div class="guia-card-items">caixas, jornais, revistas, cadernos</div>
+            </div>
+          </div>
+
+          <div class="guia-info-panel" id="guia-info-panel">
+            <div class="guia-info-placeholder">
+              <i class="fi fi-rr-info guia-placeholder-icon"></i>
+              <p>Selecione uma categoria acima para ver as instruções de descarte</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
